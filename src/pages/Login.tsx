@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../component/LoginForm";
 import SignUpForm from "../component/SignUpForm";
 
@@ -7,6 +7,7 @@ const LoginSwap = "swap login button";
 const SignUpSwap = "swap signup button";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSwap = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,6 +20,10 @@ const Login = () => {
     } else {
       setIsLogin(false);
     }
+  }
+
+  const handleBack = () => {
+    navigate(-1);
   }
 
   return (
@@ -60,12 +65,12 @@ const Login = () => {
           :
           <SignUpForm />
         }
-        <Link
-          to="/clubs/0"
+        <button
           className="group relative flex w-full justify-center rounded-md mt-5 mr-1 bg-gray-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          onClick={handleBack}
         >
           Back
-        </Link>
+        </button>
         </div>
       </div>
   )

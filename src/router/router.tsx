@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import App from "../pages/App";
 import Club from "../pages/Club";
 import AppliedClub from "../pages/AppliedClub";
+import ClubDetails from "../pages/ClubDetails";
 
 const Router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const Router = createBrowserRouter([
       {
         path: "applied/:page",
         element: <AppliedClub />
+      },
+      {
+        path: "clubdetails/:id",
+        element: <ClubDetails />
       }
     ]
   },

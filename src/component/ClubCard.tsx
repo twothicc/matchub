@@ -1,4 +1,5 @@
 import { UsersIcon } from '@heroicons/react/20/solid';
+import { useNavigate } from 'react-router';
 import { Listing } from './ClubList';
 
 type ClubProps = {
@@ -6,8 +7,17 @@ type ClubProps = {
 }
 
 const ClubCard = ({listing}: ClubProps) => {
+  const navigate = useNavigate();
+
+  const handleDetails = () => {
+    navigate("/clubdetails/" + listing.id);
+  }
+
   return (
-    <div className="flex justify-center item-center mx-0.5 my-2">
+    <div 
+      className="flex justify-center item-center mx-0.5 my-2"
+      onClick={handleDetails}
+    >
       <div
         className="block max-w-xl w-3/4 rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700">
         <h3 className="mb-2 text-xl font-medium leading-tight mb-2 text-neutral-800 dark:text-neutral-50">
