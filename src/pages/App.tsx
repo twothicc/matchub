@@ -2,14 +2,16 @@ import { useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { selectLogin, logout } from '../slices/loginSlice';
+import { selectClubPage } from '../slices/pageSlice';
 
 function App() {
   const isLogin = useAppSelector(selectLogin);
+  const lastClubPage = useAppSelector(selectClubPage)
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    return navigate("/clubs/0");
+    return navigate("/clubs/" + lastClubPage);
   }, [])
 
   const handleLogout = () => {
