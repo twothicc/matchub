@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import LoginForm from "../component/LoginForm";
 import SignUpForm from "../component/SignUpForm";
 
@@ -33,6 +34,7 @@ const Login = () => {
               :
               "group relative flex w-full justify-center rounded-md mr-1 bg-gray-300 py-2 px-3 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
             }
+            disabled={isLogin}
             onClick={handleSwap}
           >
               Login
@@ -46,6 +48,7 @@ const Login = () => {
               :
               "group relative flex w-full justify-center rounded-md mr-1 bg-gray-300 py-2 px-3 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
             }
+            disabled={!isLogin}
             onClick={handleSwap}
           >
               Sign Up
@@ -57,6 +60,12 @@ const Login = () => {
           :
           <SignUpForm />
         }
+        <Link
+          to="/clubs/0"
+          className="group relative flex w-full justify-center rounded-md mt-5 mr-1 bg-gray-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Back
+        </Link>
         </div>
       </div>
   )
