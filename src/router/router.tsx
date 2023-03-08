@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/Login";
-import Club from "../pages/Club";
-import AppliedClub from "../pages/AppliedClub";
-import ClubDetails from "../pages/ClubDetails";
 import React, { Suspense } from "react";
 import Spinner from "../component/Spinner";
 
 const App = React.lazy(() => import("../pages/App"));
+const Login = React.lazy(() => import("../pages/Login"));
+const Club = React.lazy(() => import("../pages/Club"));
+const AppliedClub = React.lazy(() => import("../pages/AppliedClub"));
+const ClubDetails = React.lazy(() => import("../pages/ClubDetails"));
 
 const Router = createBrowserRouter([
   {
@@ -19,21 +19,37 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "clubs/:page",
-        element: <Club />
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Club />
+          </Suspense>
+        )
       },
       {
         path: "applied/:page",
-        element: <AppliedClub />
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <AppliedClub />
+          </Suspense>
+        )
       },
       {
         path: "clubdetails/:id",
-        element: <ClubDetails />
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ClubDetails />
+          </Suspense>
+        )
       }
     ]
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <Login />
+      </Suspense>
+    )
   }
 ]);
 
