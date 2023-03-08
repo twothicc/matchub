@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { selectLogin, logout } from '../slices/loginSlice';
@@ -54,7 +54,9 @@ function App() {
             </div>
           </nav>
         </header>
-        <Outlet />
+        <Suspense>
+          <Outlet />
+        </Suspense>
       </body>
   </html>
   );
