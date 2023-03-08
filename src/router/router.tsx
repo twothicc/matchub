@@ -4,9 +4,8 @@ import Spinner from "../component/Spinner";
 
 const App = React.lazy(() => import("../pages/App"));
 const Login = React.lazy(() => import("../pages/Login"));
-const Club = React.lazy(() => import("../component/Club"));
-const AppliedClub = React.lazy(() => import("../component/AppliedClub"));
-const ClubDetails = React.lazy(() => import("../component/ClubDetails"));
+const ClubList = React.lazy(() => import("../component/ClubList"));
+const ClubDetails = React.lazy(() => import("../component/ClubDetails"))
 
 const Router = createBrowserRouter([
   {
@@ -21,7 +20,7 @@ const Router = createBrowserRouter([
         path: "clubs/:page",
         element: (
           <Suspense fallback={<Spinner />}>
-            <Club />
+            <ClubList isApplied={false} />
           </Suspense>
         )
       },
@@ -29,7 +28,7 @@ const Router = createBrowserRouter([
         path: "applied/:page",
         element: (
           <Suspense fallback={<Spinner />}>
-            <AppliedClub />
+            <ClubList isApplied={true} />
           </Suspense>
         )
       },
