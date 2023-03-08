@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useAppSelector } from '../hooks';
 import { selectLogin } from '../slices/loginSlice';
 
-const ClubDetailsCard = () => {
+const ClubDetails = () => {
   const isLogin = useAppSelector(selectLogin);
   const navigate = useNavigate();
 
@@ -85,4 +85,4 @@ const ClubDetailsCard = () => {
   )
 };
 
-export default ClubDetailsCard;
+export default ClubDetails;

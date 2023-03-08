@@ -26,7 +26,7 @@ export const pageSlice = createSlice({
   }
 });
 
-export const { setClubPage } = pageSlice.actions;
+export const { setClubPage, setAppliedClubPage } = pageSlice.actions;
 
 export const selectClubPage = (state: RootState) => state.page.clubPage;
 

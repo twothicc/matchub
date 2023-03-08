@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import ClubList from "../component/ClubList";
-import Pagination from "../component/pagination";
+import ClubList from "./ClubList";
+import Pagination from "./pagination";
 import { setClubPage } from "../slices/pageSlice";
 
 const Club = () => {

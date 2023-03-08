@@ -1,18 +1,30 @@
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { selectLogin } from "../slices/loginSlice";
-import ClubList from "../component/ClubList";
-import { Link } from "react-router-dom";
-import { selectClubPage } from "../slices/pageSlice";
+import ClubList from "./ClubList";
+import { Link, useParams } from "react-router-dom";
+import { selectClubPage, setAppliedClubPage } from "../slices/pageSlice";
+import Pagination from "./pagination";
 
 const AppliedClub = () => {
   const lastClubPage = useAppSelector(selectClubPage);
   const isLogin = useAppSelector(selectLogin);
+  const dispatch = useAppDispatch();
+
+  const { page } = useParams();
 
   return (
     <>
     {
       isLogin ?
-      <ClubList />
+      <div>
+        <ClubList />
+        <Pagination 
+          total={1000} 
+          size={20} 
+          curr={page === undefined ? 0 : parseInt(page)}
+          updatePage={(page: number) => {dispatch(setAppliedClubPage(page))}}
+        />
+      </div>
       :
       <div className="grid min-h-full place-items-center bg-white py-24 px-6 sm:py-32 lg:px-8">
         <div className="text-center">

@@ -60,6 +60,7 @@ const ClubList = ({listings = defaultListings}: ClubListProp) => {
             />
           ))
         }
+        
       </div>
     )
 };
