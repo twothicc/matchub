@@ -24,8 +24,8 @@ const ClubDetails = () => {
     about: "dummy club description",
     registrationFee: 0,
     lastYearActiveMembers: 0,
-    contactName: "John Doe",
-    contactNumber: "999",
+    contactPersonName: "John Doe",
+    contactPersonNumber: "999",
   });
 
   console.log(isApplied)
@@ -110,11 +110,11 @@ const ClubDetails = () => {
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Contact Name</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactName}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactPersonName}</dd>
           </div>
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Contact Number</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactNumber}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactPersonNumber}</dd>
           </div>
         </dl>
       </div>
