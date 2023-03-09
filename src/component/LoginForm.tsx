@@ -1,16 +1,41 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks';
-import { login } from "../slices/loginSlice";
+import { login, setUser } from "../slices/loginSlice";
 
 const LoginForm = () => {
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO login check
-    dispatch(login());
+    const formData = new FormData(event.currentTarget);
+    
+    await fetch("http://localhost:5000/auth/login", 
+    { 
+      method: "post",
+      body: JSON.stringify(Object.fromEntries(formData)),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error("login unsuccessful")
+      }
+
+      return res.json();
+    })
+    .then(res => {
+      console.log(res.msg);
+      dispatch(login());
+      dispatch(dispatch(setUser(res.data)));
+      navigate("/clubs/0");
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
   return (

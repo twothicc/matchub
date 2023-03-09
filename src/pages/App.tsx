@@ -18,10 +18,10 @@ function App({ children }: AppProp) {
 
 
   return (
-    <>
+    <div className="min-h-screen">
       <NavBar />
       {children}
-    </>
+    </div>
   );
 }
 

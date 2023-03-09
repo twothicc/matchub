@@ -1,28 +1,86 @@
-import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useAppSelector } from '../hooks';
-import { selectLogin } from '../slices/loginSlice';
+import { selectLogin, selectUser } from '../slices/loginSlice';
+
+type ClubDetails = {
+  title: string,
+  about: string,
+  registrationFee: number,
+  lastYearActiveMembers: number,
+  contactName: string,
+  contactNumber: string,
+}
 
 const ClubDetails = () => {
+  const { id } = useParams();
   const isLogin = useAppSelector(selectLogin);
+  const user = useAppSelector(selectUser);
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("Club");
-  const [about, setAbout] = useState("This is a Club");
-  const [registrationFee, setRegistrationFee] = useState(1);
-  const [lastYearActiveMembers, setLastYearActiveMembers] = useState(1);
-  const [contactName, setContactName] = useState("John Doe");
-  const [contactNumber, setContactNumber] = useState("999");
+  const [isApplied, setIsApplied] = useState(true); 
+  const [clubDetails, setClubDetails] = useState({
+    title: "dummy club",
+    about: "dummy club description",
+    registrationFee: 0,
+    lastYearActiveMembers: 0,
+    contactName: "John Doe",
+    contactNumber: "999",
+  });
+
+  console.log(isApplied)
+
+  const fetchClubDetails = async () => {
+    await fetch(`http://localhost:5000/clubs/details/${id}`, { 
+      method: "get",
+      credentials: "include",
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.msg);
+      setClubDetails(res.data);
+    })
+  };
+
+  const checkAppliedClub = async () => {
+    await fetch(`http://localhost:5000/clubs/status/${id}?userId=${user.id}`, {
+      method: "get",
+      credentials: "include",
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      setIsApplied(res.isApplied);
+    });
+  }
+
+  const handleApply = async () => {
+    await fetch(`http://localhost:5000/clubs/apply/${id}`, {
+      method: "post",
+      body: JSON.stringify({
+        userId: user.id,
+        clubId: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res.msg);
+      setIsApplied(true);
+    })
+  };
 
   useEffect(() => {
-    
-  }, [])
+    fetchClubDetails();
+    checkAppliedClub();
+  }, [id])
 
   const handleBack = () => {
     navigate(-1);
   }
-  
 
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -34,29 +92,29 @@ const ClubDetails = () => {
         <dl>
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Title</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{title}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.title}</dd>
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">About</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              {about}
+              {clubDetails.about}
             </dd>
           </div>
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Registration Fee</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{"$" + registrationFee}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{"$" + clubDetails.registrationFee}</dd>
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Last Year Active Members</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{lastYearActiveMembers}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.lastYearActiveMembers}</dd>
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Contact Name</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{contactName}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactName}</dd>
           </div>
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Contact Number</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{contactNumber}</dd>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{clubDetails.contactNumber}</dd>
           </div>
         </dl>
       </div>
@@ -71,12 +129,13 @@ const ClubDetails = () => {
         <button
           type="button"
           className={
-            isLogin ?
+            isLogin && !isApplied ?
             "group relative flex w-full justify-center max-w-md w-1/4 rounded-md mr-1 bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             :
             "group relative flex w-full justify-center max-w-md w-1/4 rounded-md mr-1 bg-gray-400 py-2 px-3 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           }
           disabled={!isLogin}
+          onClick={handleApply}
         >
           Apply
         </button>
