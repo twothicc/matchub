@@ -12,7 +12,7 @@ const LoginForm = () => {
 
     const formData = new FormData(event.currentTarget);
     
-    await fetch("http://localhost:5000/auth/login", 
+    await fetch(`${process.env.REACT_APP_BACKEND}/auth/login`, 
     { 
       method: "post",
       body: JSON.stringify(Object.fromEntries(formData)),
@@ -31,7 +31,7 @@ const LoginForm = () => {
     .then(res => {
       console.log(res.msg);
       dispatch(login());
-      dispatch(dispatch(setUser(res.data)));
+      dispatch(setUser(res.data));
       navigate("/clubs/0");
     }).catch(err => {
       console.error(err);

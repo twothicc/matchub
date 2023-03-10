@@ -9,7 +9,7 @@ type PaginationProp = {
   updatePage: (page: number) => void
 }
 
-const size = 5;
+const size = parseInt(process.env.REACT_APP_PAGE_SIZE === undefined ? "5" : process.env.REACT_APP_PAGE_SIZE);
 
 const Pagination = ({ total, curr, pageUrl, updatePage }: PaginationProp) => {
   const [pages, setPages] = useState(0);

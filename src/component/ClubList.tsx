@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
 import { setAppliedClubPage, setClubPage } from "../slices/pageSlice";
 import { useAppSelector, useAppDispatch } from "../hooks";
-import { selectLogin, selectUser } from "../slices/loginSlice";
+import { logout, selectLogin, selectUser } from "../slices/loginSlice";
 import { useEffect, useState } from "react";
 import NoLogin from "./NoLogin";
 import NoClubs from "./NoClubs";
@@ -19,7 +19,7 @@ interface ClubListProp {
   isApplied: boolean
 };
 
-const size = 5;
+const size = parseInt(process.env.REACT_APP_PAGE_SIZE === undefined ? "5" : process.env.REACT_APP_PAGE_SIZE);
 
 const ClubList = ({ isApplied = false }: ClubListProp) => {
   const { pageString } = useParams();
@@ -33,20 +33,29 @@ const ClubList = ({ isApplied = false }: ClubListProp) => {
   const [listings, setListings] = useState<Listing[]>([]);
 
   const fetchAppliedClubs = async (page: number, userId: number) => {
-    await fetch(`http://localhost:5000/clubs/applied/${page}?userId=${userId}`, { 
+    await fetch(`${process.env.REACT_APP_BACKEND}/clubs/applied/${page}?userId=${userId}`, { 
       method: "get",
       credentials: "include",
     })
-    .then(res => res.json())
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error("auth unsuccessful")
+      }
+
+      return res.json();
+    })
     .then(res => {
       console.log(res.msg);
       setCount(res.data.count);
       setListings(res.data.rows);
+    }).catch(err => {
+      dispatch(logout);
+      console.error(err);
     })
   }
 
   const fetchClubs = async (page: number) => {
-    await fetch(`http://localhost:5000/clubs/${page}`, { 
+    await fetch(`${process.env.REACT_APP_BACKEND}/clubs/${page}`, { 
       method: "get" ,
       credentials: "include",
     })

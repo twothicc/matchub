@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { useAppSelector } from '../hooks';
-import { selectLogin, selectUser } from '../slices/loginSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { logout, selectLogin, selectUser } from '../slices/loginSlice';
 
 type ClubDetails = {
   title: string,
@@ -16,6 +16,7 @@ const ClubDetails = () => {
   const { id } = useParams();
   const isLogin = useAppSelector(selectLogin);
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [isApplied, setIsApplied] = useState(true); 
@@ -29,7 +30,7 @@ const ClubDetails = () => {
   });
 
   const fetchClubDetails = async () => {
-    await fetch(`http://localhost:5000/clubs/details/${id}`, { 
+    await fetch(`${process.env.REACT_APP_BACKEND}/clubs/details/${id}`, { 
       method: "get",
       credentials: "include",
     })
@@ -41,19 +42,28 @@ const ClubDetails = () => {
   };
 
   const checkAppliedClub = async () => {
-    await fetch(`http://localhost:5000/clubs/status/${id}?userId=${user.id}`, {
+    await fetch(`${process.env.REACT_APP_BACKEND}/clubs/status/${id}?userId=${user.id}`, {
       method: "get",
       credentials: "include",
     })
-    .then(res => res.json())
+    .then(res => {
+      if (res.status === 401) {
+        throw new Error("auth unsuccessful")
+      }
+
+      return res.json();
+    })
     .then(res => {
       console.log(res);
       setIsApplied(res.isApplied);
+    }).catch(err => {
+      dispatch(logout);
+      console.error(err);
     });
   }
 
   const handleApply = async () => {
-    await fetch(`http://localhost:5000/clubs/apply/${id}`, {
+    await fetch(`${process.env.REACT_APP_BACKEND}/clubs/apply/${id}`, {
       method: "post",
       body: JSON.stringify({
         userId: user.id,
@@ -77,7 +87,7 @@ const ClubDetails = () => {
     if (isLogin) {
       checkAppliedClub();
     }
-  }, [id])
+  }, [id, isLogin])
 
   const handleBack = () => {
     navigate(-1);

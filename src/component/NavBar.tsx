@@ -8,7 +8,7 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
 
   const handleLogout = async () => {
-    await fetch("http://localhost:5000/auth/logout", { 
+    await fetch(`${process.env.REACT_APP_BACKEND}/auth/logout`, { 
       method: "get",
       credentials: "include",
     })
