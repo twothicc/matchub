@@ -87,7 +87,7 @@ const ClubList = ({ isApplied = false }: ClubListProp) => {
   useEffect(() => {
     const totalPages = Math.ceil(count / size);
     const maxPage = totalPages === 0 ? 0 : totalPages - 1;
-    console.log(page, maxPage)
+
     if (page > maxPage) {
       if (isApplied) {
         navigate(`/applied/${maxPage}`);
@@ -98,13 +98,13 @@ const ClubList = ({ isApplied = false }: ClubListProp) => {
   }, [count])
 
   const handleUpdateClubPage = (page: number) => {
-    setPage(page);
     dispatch(setClubPage(page));
+    setPage(page);
   }
 
   const handleUpdateAppliedClubPage = (page: number) => {
-    setPage(page);
     dispatch(setAppliedClubPage(page));
+    setPage(page);
   }
     
   return (

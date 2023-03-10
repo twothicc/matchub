@@ -58,6 +58,7 @@ const Pagination = ({ total, curr, pageUrl, updatePage }: PaginationProp) => {
                 if (start + i < pages) {
                   return (
                     <Link
+                      key={pageUrl + (start + i)}
                       to={pageUrl + (start + i)}
                       className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 bg-gray-50 focus:z-20 focus:outline-offset-0"
                       onClick={() => {updatePage(start + i)}}
@@ -68,8 +69,8 @@ const Pagination = ({ total, curr, pageUrl, updatePage }: PaginationProp) => {
                 } else {
                   return (
                     <button
+                      key={"invalid_page_" + (start + i)}
                       className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-300 ring-1 ring-inset ring-gray-300 bg-gray-50 focus:z-20 focus:outline-offset-0"
-                      value={start + i}
                       disabled={true}
                     >
                       {start + i}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
 import { selectClubPage } from '../slices/pageSlice';
 import NavBar from '../component/NavBar';
+import FunctionalErrorBoundary from '../component/ErrorBoundary';
 
 type AppProp = {
   children: ReactNode
@@ -19,8 +20,12 @@ function App({ children }: AppProp) {
 
   return (
     <div className="min-h-screen">
-      <NavBar />
-      {children}
+      <FunctionalErrorBoundary children={
+        <>
+          <NavBar />
+          {children}
+        </>
+      }/>
     </div>
   );
 }

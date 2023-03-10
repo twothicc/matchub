@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import FunctionalErrorBoundary from "../component/ErrorBoundary";
 import LoginForm from "../component/LoginForm";
 import SignUpForm from "../component/SignUpForm";
 
@@ -27,6 +28,7 @@ const Login = () => {
   }
 
   return (
+    <FunctionalErrorBoundary children={
       <div className="flex min-h-screen justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="absolute flex flex-col max-w-md w-1/3 top-1/4">
         <div className="flex flex-row justify-center mb-5">
@@ -73,6 +75,7 @@ const Login = () => {
         </button>
         </div>
       </div>
+    } />
   )
 };
 
