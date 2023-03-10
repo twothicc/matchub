@@ -11,8 +11,6 @@ const SignUpForm = () => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-
-    console.log(JSON.stringify(Object.fromEntries(formData)))
     
     await fetch("http://localhost:5000/auth/signup", 
     { 
