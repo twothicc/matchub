@@ -28,8 +28,6 @@ const ClubDetails = () => {
     contactPersonNumber: "999",
   });
 
-  console.log(isApplied)
-
   const fetchClubDetails = async () => {
     await fetch(`http://localhost:5000/clubs/details/${id}`, { 
       method: "get",
@@ -75,7 +73,10 @@ const ClubDetails = () => {
 
   useEffect(() => {
     fetchClubDetails();
-    checkAppliedClub();
+
+    if (isLogin) {
+      checkAppliedClub();
+    }
   }, [id])
 
   const handleBack = () => {
