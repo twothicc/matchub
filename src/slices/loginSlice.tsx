@@ -26,7 +26,6 @@ const getLocalStorageLoginState = ():boolean => {
 
 const getLocalStorageUserState = ():User => {
   const value = localStorage.getItem(userKey);
-  console.log(value)
   return value === null ? noLoginUser : JSON.parse(value);
 }
 

@@ -12,19 +12,16 @@ type PaginationProp = {
 const size = parseInt(process.env.REACT_APP_PAGE_SIZE === undefined ? "5" : process.env.REACT_APP_PAGE_SIZE);
 
 const Pagination = ({ total, curr, pageUrl, updatePage }: PaginationProp) => {
+  const tempStart = curr - Math.floor(size / 2)
   const [pages, setPages] = useState(0);
-  const [start, setStart] = useState(curr);
+  const [start, setStart] = useState(tempStart < 0 ? 0 : tempStart);
 
   useEffect(() => {
     const result = Math.ceil(total / size);
     if (result > 0) {
       setPages(result);
     }
-  }, [total])
-
-  useEffect(() => {
-    setStart(curr);
-  }, [curr])
+  }, [total]);
 
   const handleBackwards = () => {
     let newVal = start - size;

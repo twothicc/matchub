@@ -7,6 +7,8 @@ import { logout, selectLogin, selectUser } from "../slices/loginSlice";
 import { useEffect, useState } from "react";
 import NoLogin from "./NoLogin";
 import NoClubs from "./NoClubs";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export type Listing = {
   id: number,
@@ -49,8 +51,9 @@ const ClubList = ({ isApplied = false }: ClubListProp) => {
       setCount(res.data.count);
       setListings(res.data.rows);
     }).catch(err => {
-      dispatch(logout);
+      toast("login session has expired");
       console.error(err);
+      dispatch(logout);
     })
   }
 
@@ -156,6 +159,18 @@ const ClubList = ({ isApplied = false }: ClubListProp) => {
           :
           <NoLogin lastClubPage={page} />
       }
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   )
 };

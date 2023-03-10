@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { selectLogin, logout } from '../slices/loginSlice';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -21,10 +23,15 @@ const NavBar = () => {
     })
     .then(res => {
       console.log(res.msg);
+      toast(res.msg)
       dispatch(logout());
       navigate("/clubs/0");
     })
-    .catch(err => console.error(err));
+    .catch(
+      err => {
+        console.error(err);
+        dispatch(logout());
+      });
   };
 
   return (
@@ -44,7 +51,7 @@ const NavBar = () => {
             Applied Clubs
           </Link>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div key={`login_${isLogin}`} className="hidden lg:flex lg:flex-1 lg:justify-end">
           {
             isLogin ?
             <button
@@ -60,6 +67,18 @@ const NavBar = () => {
           }
         </div>
       </nav>
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </header>
   )
 };
