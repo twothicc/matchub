@@ -20,7 +20,7 @@ const ClubCard = ({listing}: ClubProps) => {
     >
       <div
         className="block max-w-xl w-3/4 rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700">
-        <h3 className="mb-2 text-xl font-medium leading-tight mb-2 text-neutral-800 dark:text-neutral-50">
+        <h3 className="mb-2 max[425px]:text-base md:text-xl font-medium leading-tight mb-2 text-neutral-800 dark:text-neutral-50">
           {listing.name}
         </h3>
         <p className="mb-4 text-sm text-neutral-600 mb-1 dark:text-neutral-200">

@@ -30,7 +30,7 @@ const Login = () => {
   return (
     <FunctionalErrorBoundary children={
       <div className="flex min-h-screen justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="absolute flex flex-col max-w-md w-1/3 top-1/4">
+        <div className="absolute flex flex-col max-w-md max-[425px]:w-2/3 md:w-1/2 top-1/4">
         <div className="flex flex-row justify-center mb-5">
           <button
             name={LoginSwap}

@@ -43,7 +43,7 @@ const NavBar = () => {
             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
           </a>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="flex max-[425px]:gap-x-2 min-[425px]:gap-x-10 lg:flex lg:gap-x-12">
           <Link to="clubs/0" className="text-sm font-semibold leading-6 text-gray-900">
             Clubs List
           </Link>
@@ -51,7 +51,7 @@ const NavBar = () => {
             Applied Clubs
           </Link>
         </div>
-        <div key={`login_${isLogin}`} className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div key={`login_${isLogin}`} className="lg:flex lg:flex-1 lg:justify-end">
           {
             isLogin ?
             <button

@@ -40,7 +40,7 @@ const Pagination = ({ total, curr, pageUrl, updatePage }: PaginationProp) => {
   }
 
   return (
-    <div className="sticky bottom-2 z-50 hidden flex-col sm:flex sm:flex-1 sm:items-center sm:justify-end">
+    <div className="sticky bottom-2 z-50 flex-col flex flex-1 items-center justify-end">
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
             <button
